@@ -1,0 +1,22 @@
+#reminder {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#reminder td, #reminder th {
+    text-align: left;
+    padding: 8px;
+}
+
+#reminder tr:nth-child(even){background-color: #f2f2f2;}
+
+#reminder tr:hover {background-color: #ddd;}
+
+#reminder th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: DodgerBlue;
+    color: white;
+}
