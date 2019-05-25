@@ -2,6 +2,7 @@
 <head>
     <title>Events</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -12,42 +13,37 @@
 
     <ul class="nav nav-tabs" id="tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="add-event-tab" data-toggle="tab" href="#add-event" role="tab" aria-controls="add-event" aria-selected="true">Add event</a>
+            <a class="nav-link active" id="add-reminder-tab" data-toggle="tab" href="#add-reminder" role="tab" aria-controls="add-reminder" aria-selected="true">Add event</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="view-events-tab" data-toggle="tab" href="#view-events" role="tab" aria-controls="view-events" aria-selected="false">View events</a>
+            <a class="nav-link" id="view-reminder-tab" data-toggle="tab" href="#view-reminder" role="tab" aria-controls="view-reminder" aria-selected="false">View reminders</a>
         </li>
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane container active" id="add-event" role="tabpanel" aria-labelledby="add-event-tab">
-            <h3>Add an event</h3>
-            <form id="create-events">
+        <div class="tab-pane container active" id="add-reminder" role="tabpanel" aria-labelledby="add-reminder-tab">
+            <h3>Add an reminder</h3>
+            <form id="create-reminder">
                 <div class="form-group">
                     <label for="inputTitle">Title</label>
                     <input type="text" name="title" class="form-control" id="inputTitle" aria-describedby="titleHelp" placeholder="Enter title">
                     <small id="titleHelp" class="form-text text-muted">Enter a title for your new event.</small>
                 </div>
                 <div class="form-group">
-                    <label for="inputDescription">Description</label>
-                    <textarea class="form-control" id="inputDescription" rows="5" aria-describedby="descriptionHelp"></textarea>
-                    <small id="descriptionHelp" class="form-text text-muted">Enter a short description for your new event.</small>
-                </div>
-                <div class="form-group">
                     <label for="inputDate">Date</label>
-                    <input class="form-control" name="eventDate" type="date" id="inputDate" aria-describedby="dateHelp">
+                    <input class="form-control" name="remindDate" type="date" id="inputDate" aria-describedby="dateHelp">
                     <small id="dateHelp" class="form-text text-muted">Enter a date for your new event.</small>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
         </div>
         <div class="tab-pane container active" id="view-events" role="tabpanel" aria-labelledby="view-events-tab">
-            <table class="table" id="events">
+            <table class="table" id="reminders">
                 <thead>
                 <tr>
                     <th scope="col">Title</th>
-                    <th scope="col">Description</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Time Remaining</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>

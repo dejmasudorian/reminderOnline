@@ -7,7 +7,7 @@ $(document).ready(function(){
         $(this).addClass("active");
     })
 
-    getEvents()
+    getReminders()
 
     $('#events tbody').delegate('.delete', 'click', function () {
         var id = $(this).data('id');
@@ -16,20 +16,20 @@ $(document).ready(function(){
 
 })
 
-function getEvents() {
+function getReminders() {
     $.ajax({
-        url: apiUrl + "/events",
+        url: apiUrl + "/reminders",
         method: "GET"
     }).done(function (response) {
-        $.each(response, function(i, event) {
+        $.each(response, function(i, reminder) {
             $('#events > tbody:last-child').append("<tr><td hidden>" + event.id +
-                "</td><td>" + event.title +
-                "</td><td>" + event.description +
-                "</td><td>" + event.eventDate +
+                "</td><td>" + reminder.title +
+                "</td><td>" + reminder.remindDate +
                 "</td><td><a href='#' class='delete' data-id='${event.id}'>Delete</a></td></tr>");
         });
     });
 }
+
 
 function deleteEvent(id) {
     $.ajax({
@@ -44,4 +44,6 @@ function deleteEvent(id) {
         $('#events tbody').find("tr#" + id).remove();
 
     });
+
+
 }
