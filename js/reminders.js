@@ -7,15 +7,12 @@ $(document).ready(function(){
         $(this).addClass("active");
     });
 
+
     getReminders();
     bindingEvents();
 
 });
 
-$('#reminders tbody').delegate('.delete', 'click', function () {
-    var id = $(this).data('id');
-    deleteReminder(id);
-});
 
 function getReminders() {
     $.ajax({
@@ -23,15 +20,17 @@ function getReminders() {
         method: "GET"
     }).done(function (response) {
         $.each(response, function(i, reminder) {
-            $('#reminders > tbody:last-child').append("<tr><td hidden>" + event.id +
+            $('#reminders > tbody:last-child').append("<tr><td hidden>" + reminder.id +
                 "</td><td>" + reminder.title +
                 "</td><td>" + reminder.remindDate +
                 "</td><td>" + "Press to hide/show" +
-                "</td><td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a>\n" +
-                "<a href=\"#\" class=\"fa fa-trash delete\" data-id=\"${reminder.id}\"></a></td></tr>");
+                "</td><td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a>" +
+                "<a href=\"#\" class=\"fa fa-trash delete\" data-id=\"${reminder.id}\" onclick='deleteReminder(reminder.id)'></a></td></tr>");
         });
     });
 }
+
+
 
 
 function deleteReminder(id) {
@@ -58,8 +57,12 @@ function createReminder() {
     $.ajax({
         url: apiUrl + "/reminders/" ,
         method: "POST",
+        origin: "*",
+        headers:{"Access-Control-Allow-Origin":"*",
+                 "Access-Control-Allow-Origin":"GET,POST,PUT,DELETE",
+                 "Access-Control-Allow-Origin":"Origin, X-Requested-With, Content-Type, Accept"},
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data)
+        data: JSON
     }).done(function (response) {
         console.log(response);
         $('#reminders tbody').append(getRow(response));
@@ -106,3 +109,5 @@ function bindingEvents() {
         Reminder.startEdit(id);
     });
 }
+
+

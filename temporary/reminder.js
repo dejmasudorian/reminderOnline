@@ -47,44 +47,39 @@ window.Reminder = {
 
 
 
-    getRow: function (reminder) {
-        var dateCorrection = new Date(reminder.remindDate).toLocaleDateString('ro-RO');
 
-        return `<tr id="${reminder.id}">
-<td class="title">${reminder.title}</td>
-<td class="remindDate">${dateCorrection}</td>
-<td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a>
-<a href="#" class="fa fa-trash delete" data-id="${reminder.id}"></a></td>
-</tr>
+    get: function () {
+        $.ajax({
+            url: Reminder.apiUrl + "/reminders",
+            method: "GET"
+        }).done(function (response) {
+            console.log(response);
+            // reload items table
+
+            Reminder.displayReminders(response.content);
+        });
+    },
+
+    getReminderRow: function (product) {
+        return `<tr><td hidden>" + reminder.id +
+                "</td><td>" + reminder.title +
+                "</td><td>" + reminder.remindDate +
+                "</td><td>" + "Press to hide/show" +
+                "</td><td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a>\\n" +
+                "<a href=\\"#\\" class=\\"fa fa-trash delete\\" data-id=\\"${reminder.id}\\" onclick="deleteReminder(reminder.id)"></a></td></tr>
 `
     },
 
-    display: function (reminders) {
-        console.log('Displaying reminders:');
+    displayReminders: function (reminder) {
+        console.log('Displaying reminders.');
 
         var rows = '';
 
-        reminders.forEach(reminder => rows += Reminder.getRow(reminder));
+        reminder.forEach(product => rows += Reminder.getReminderRow(reminder));
 
         console.log(rows);
 
         $('#reminders tbody').html(rows);
-    },
-
-    get: function () {
-        $.ajax({
-            url: API.READ,
-            method: ACTION_METHODS.READ
-        }).done(function (response) {
-            $.each(response, function(i, reminder) {
-                $('#reminders > tbody:last-child').append("<tr><td hidden>" + event.id +
-                    "</td><td>" + reminder.title +
-                    "</td><td>" + reminder.remindDate +
-                    "</td><td>" + "Press to hide/show" +
-                    "</td><td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a>\n" +
-                    "<a href=\"#\" class=\"fa fa-trash delete\" data-id=\"${reminder.id}\"></a></td></tr>");
-            });
-        });
     },
 
 
