@@ -3248,7 +3248,7 @@
             // Queue of execution data for repeatable lists
             queue = [],
 
-            // Index of currently firing callback (modified by add/remove as needed)
+            // Index of currently firing callback (modified by createReminder/remove as needed)
             firingIndex = -1,
 
             // Fire callbacks
@@ -3268,7 +3268,7 @@
                         if ( list[ firingIndex ].apply( memory[ 0 ], memory[ 1 ] ) === false &&
                             options.stopOnFalse ) {
 
-                            // Jump to end and forget the data so .add doesn't re-fire
+                            // Jump to end and forget the data so .createReminder doesn't re-fire
                             firingIndex = list.length;
                             memory = false;
                         }
@@ -3285,7 +3285,7 @@
                 // Clean up if we're done firing for good
                 if ( locked ) {
 
-                    // Keep an empty list if we have data for future add calls
+                    // Keep an empty list if we have data for future createReminder calls
                     if ( memory ) {
                         list = [];
 
@@ -3300,7 +3300,7 @@
             self = {
 
                 // Add a callback or a collection of callbacks to the list
-                add: function() {
+                createReminder: function() {
                     if ( list ) {
 
                         // If we have memory from a past run, we should fire after adding
@@ -3362,7 +3362,7 @@
                     return this;
                 },
 
-                // Disable .fire and .add
+                // Disable .fire and .createReminder
                 // Abort any current/pending executions
                 // Clear all callbacks and values
                 disable: function() {
@@ -3375,7 +3375,7 @@
                 },
 
                 // Disable .fire
-                // Also disable .add unless we have memory (since it would have no effect)
+                // Also disable .createReminder unless we have memory (since it would have no effect)
                 // Abort any pending executions
                 lock: function() {
                     locked = queue = [];
@@ -3462,7 +3462,7 @@
         Deferred: function( func ) {
             var tuples = [
 
-                    // action, add listener, callbacks,
+                    // action, createReminder listener, callbacks,
                     // ... .then handlers, argument index, [final state]
                     [ "notify", "progress", jQuery.Callbacks( "memory" ),
                         jQuery.Callbacks( "memory" ), 2 ],
@@ -3644,8 +3644,8 @@
 
                         return jQuery.Deferred( function( newDefer ) {
 
-                            // progress_handlers.add( ... )
-                            tuples[ 0 ][ 3 ].add(
+                            // progress_handlers.createReminder( ... )
+                            tuples[ 0 ][ 3 ].createReminder(
                                 resolve(
                                     0,
                                     newDefer,
@@ -3656,8 +3656,8 @@
                                 )
                             );
 
-                            // fulfilled_handlers.add( ... )
-                            tuples[ 1 ][ 3 ].add(
+                            // fulfilled_handlers.createReminder( ... )
+                            tuples[ 1 ][ 3 ].createReminder(
                                 resolve(
                                     0,
                                     newDefer,
@@ -3667,8 +3667,8 @@
                                 )
                             );
 
-                            // rejected_handlers.add( ... )
-                            tuples[ 2 ][ 3 ].add(
+                            // rejected_handlers.createReminder( ... )
+                            tuples[ 2 ][ 3 ].createReminder(
                                 resolve(
                                     0,
                                     newDefer,
@@ -3693,14 +3693,14 @@
                 var list = tuple[ 2 ],
                     stateString = tuple[ 5 ];
 
-                // promise.progress = list.add
-                // promise.done = list.add
-                // promise.fail = list.add
-                promise[ tuple[ 1 ] ] = list.add;
+                // promise.progress = list.createReminder
+                // promise.done = list.createReminder
+                // promise.fail = list.createReminder
+                promise[ tuple[ 1 ] ] = list.createReminder;
 
                 // Handle state
                 if ( stateString ) {
-                    list.add(
+                    list.createReminder(
                         function() {
 
                             // state = "resolved" (i.e., fulfilled)
@@ -3727,7 +3727,7 @@
                 // progress_handlers.fire
                 // fulfilled_handlers.fire
                 // rejected_handlers.fire
-                list.add( tuple[ 3 ].fire );
+                list.createReminder( tuple[ 3 ].fire );
 
                 // deferred.notify = function() { deferred.notifyWith(...) }
                 // deferred.resolve = function() { deferred.resolveWith(...) }
@@ -4452,7 +4452,7 @@
                 tmp = dataPriv.get( elements[ i ], type + "queueHooks" );
                 if ( tmp && tmp.empty ) {
                     count++;
-                    tmp.empty.add( resolve );
+                    tmp.empty.createReminder( resolve );
                 }
             }
             resolve();
@@ -5041,8 +5041,8 @@
                     }
                 }
 
-                if ( special.add ) {
-                    special.add.call( elem, handleObj );
+                if ( special.createReminder ) {
+                    special.createReminder.call( elem, handleObj );
 
                     if ( !handleObj.handler.guid ) {
                         handleObj.handler.guid = handler.guid;
@@ -6304,7 +6304,7 @@
                 // Add padding
                 delta += jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
 
-                // For "border" or "margin", add border
+                // For "border" or "margin", createReminder border
                 if ( box !== "padding" ) {
                     delta += jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
 
@@ -6416,7 +6416,7 @@
             }
         },
 
-        // Don't automatically add "px" to these possibly-unitless properties
+        // Don't automatically createReminder "px" to these possibly-unitless properties
         cssNumber: {
             "animationIterationCount": true,
             "columnCount": true,
@@ -6478,7 +6478,7 @@
                     return;
                 }
 
-                // If a number was passed in, add the unit (except for certain CSS properties)
+                // If a number was passed in, createReminder the unit (except for certain CSS properties)
                 if ( type === "number" ) {
                     value += ret && ret[ 3 ] || ( jQuery.cssNumber[ origName ] ? "" : "px" );
                 }
@@ -8228,7 +8228,7 @@
                     tmp = cur;
                 }
 
-                // Only add window if we got to document (e.g., not plain obj or detached DOM)
+                // Only createReminder window if we got to document (e.g., not plain obj or detached DOM)
                 if ( tmp === ( elem.ownerDocument || document ) ) {
                     eventPath.push( tmp.defaultView || tmp.parentWindow || window );
                 }
@@ -8495,7 +8495,7 @@
         serializeArray: function() {
             return this.map( function() {
 
-                // Can add propHook for "elements" to filter or add form elements
+                // Can createReminder propHook for "elements" to filter or createReminder form elements
                 var elements = jQuery.prop( this, "elements" );
                 return elements ? jQuery.makeArray( elements ) : this;
             } )
@@ -8691,7 +8691,7 @@
         }
 
         // If we found a dataType
-        // We add the dataType to the list if needed
+        // We createReminder the dataType to the list if needed
         // and return the corresponding response
         if ( finalDataType ) {
             if ( finalDataType !== dataTypes[ 0 ] ) {
@@ -8868,7 +8868,7 @@
             },
 
             // For options that shouldn't be deep extended:
-            // you can add your own custom options here if
+            // you can createReminder your own custom options here if
             // and when you create one that shouldn't be
             // deep extended (see ajaxExtend)
             flatOptions: {
@@ -9010,7 +9010,7 @@
                                 jqXHR.always( map[ jqXHR.status ] );
                             } else {
 
-                                // Lazy-add the new callbacks in a way that preserves old ones
+                                // Lazy-createReminder the new callbacks in a way that preserves old ones
                                 for ( code in map ) {
                                     statusCode[ code ] = [ statusCode[ code ], map[ code ] ];
                                 }

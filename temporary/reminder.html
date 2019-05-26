@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reminder</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<h1>Reminder</h1>
+
+<table id="reminders">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Family Gathering</td>
+        <td>2019-05-03</td>
+    </tr>
+    <tr>
+        <td>Job Interview</td>
+        <td>2019-08-06</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Add a new reminder</h3>
+<form id="create-reminder-form">
+    <input type="text" name="title" title="Title" placeholder="Title"/>
+    <input type="datetime-local" name="remindDate" title="Date" placeholder="Date"/>
+
+    <button type="submit">Add reminder to list</button>
+</form>
+
+<script src="../js/lib/jquery-3.3.1.js"></script>
+<script src="reminder.js"></script>
+
+</body>
+</html>
