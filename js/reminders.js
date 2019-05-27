@@ -14,21 +14,26 @@ $(document).ready(function() {
         event.preventDefault();
 
         add();
+    });
 
         $('#reminders tbody').delegate('.delete', 'click', function () {
             var id = $(this).data('id');
             deleteReminder(id);
         });
 
+    $('#reminders tbody').delegate('.edit', 'click', function () {
+        var id = $(this).data('id');
+        startEdit(id);
     });
+
+
 
 
 });
 
-function countdownTimer(reminder) {
+function remainingTime(index) {
 
-var x = setInterval(function() {
-    var dateObject = new Date(reminder.remindDate);
+    var dateObject = new Date(index);
     var countDownDate = dateObject.getTime();
     var now = new Date().getTime();
     var remaining = countDownDate - now;
@@ -36,15 +41,15 @@ var x = setInterval(function() {
     var hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((remaining % (1000 * 60)) / 1000);
-    document.getElementById("timer").innerHTML = days + "d " + hours + "h "
-        + minutes + "m " + seconds + "s ";
-    if (remaining < 0) {
-        clearInterval(x);
-        document.getElementById("timer").innerHTML = "EXPIRED";
-    }
-}, 1000);}
-
-
+    var daysString = days.toString();;
+    var hoursString = hours.toString();
+    var minutesString = minutes.toString();
+    var secondsString = seconds.toString();
+    var message= daysString + "d:" + hoursString + "h:" + minutesString + "m:" + secondsString + "s";
+    if (remaining < 0)
+       message = "EXPIRED";
+    return message;
+}
 
 
 
@@ -70,8 +75,6 @@ function add() {
     });
 }
 
-
-
 function getReminders() {
     $.ajax({
         url: apiUrl + "/reminders",
@@ -81,15 +84,25 @@ function getReminders() {
             $('#reminders > tbody:last-child').append("<tr><td hidden>" + reminder.id +
                 "</td><td>" + reminder.title +
                 "</td><td>" + reminder.remindDate +
-                "</td><td>" + countdownTimer(reminder) +
-                "<p id=\"timer\"></p></td><td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a>" +
-                "<a href=\"#\" class=\"fa fa-trash delete\" data-id=\"${reminder.id}\"></a></td></tr>");
+                "</td><td>" + remainingTime(reminder.remindDate)+
+                "</td><td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a>" +
+                "<a href='#' class='fa fa-trash delete'></a></td></tr>");
         });
     });
 }
 
+function startEdit(id) {
+    // ES5 function systax inside find
+    var editPhone = PhoneBook.phoneBookList.find(function (phone) {
+        console.log(phone.first_name);
+        return phone.id == id;
+    });
+    console.debug('startEdit', editPhone);
 
-
+    var title = $("input[title='title']").val();
+    var remindDate = $("input[title='remindDate']").val();
+    PhoneBook.editId = id;
+}
 
 function deleteReminder(id) {
     $.ajax({
@@ -103,47 +116,6 @@ function deleteReminder(id) {
 }
 
 /*
-function createReminder() {
-    var title = $("input[title='title']").val();
-    var remindDate = $("input[title='remindDate']").val();
-
-//json data
-    var data = {
-        'title': title,
-        'remindDate': remindDate,
-
-    };
-
-    $.ajax({
-        url: apiUrl + "/reminders",
-        method: "POST",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data)
-    }).done(function (response) {
-        console.log(response);
-        $('#reminders tbody').append(getRow(response));
-
-    }).fail(function (jqXHR, textStatus, error) {
-        alert(textStatus);
-    })
-}
-
-function getReminders() {
-    $.ajax({
-        url: apiUrl + "/reminders",
-        method: "GET"
-    }).done(function (response) {
-        $.each(response, function(i, reminder) {
-            $('#reminders > tbody:last-child').append("<tr><td hidden>" + reminder.id +
-                "</td><td>" + reminder.title +
-                "</td><td>" + reminder.remindDate +
-                "</td><td><p id=\"timer\"></p>" +
-                "</td><td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a>" +
-                "<a href=\"#\" class=\"fa fa-trash delete\" data-id=\"${reminder.id}\" onclick='deleteReminder(reminder.id)'></a></td></tr>");
-        });
-    });
-}
-
 
 function getRow(reminder) {
     var dateCorrection = new Date(reminder.remindDate).toLocaleDateString('ro-RO');
