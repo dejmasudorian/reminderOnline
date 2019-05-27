@@ -44,7 +44,7 @@
 
 timer{
     text-align: center;
-    font-size: 60px;
+    font-size: 10px;
     margin-top: 0px;
 }
 
@@ -54,19 +54,25 @@ timer{
     width: 100%;
 }
 
-#reminders td, #phone-book th {
+td, th {
     text-align: left;
     padding: 8px;
 }
 
-#reminders tr:nth-child(even){background-color: #f2f2f2;}
+tr:nth-child(even){background-color: #f2f2f2;}
 
-#reminders tr:hover {background-color: #ddd;}
+tr:hover {background-color: #ddd;}
 
-#reminders th {
+th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
     background-color: DodgerBlue;
     color: white;
+}
+
+p {
+    text-align: center;
+    font-size: 10px;
+    margin-top: 0px;
 }

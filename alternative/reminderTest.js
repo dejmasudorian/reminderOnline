@@ -7,22 +7,22 @@ window.Reminder = {
     apiUrl: "http://localhost:8082",
 
     const: API = {
-        CREATE: "http://localhost:8082/reminders",
-        READ: "http://localhost:8082/reminders",
-        UPDATE: "http://localhost:8082/reminders",
+        POST: "http://localhost:8082/reminders",
+        GET: "http://localhost:8082/reminders",
+        PUT: "http://localhost:8082/reminders",
         DELETE: "http://localhost:8082/reminders"
     },
     const:ACTION_METHODS = {
-        CREATE: "POST",
-        READ: "GET",
-        UPDATE: "PUT",
+        POST: "POST",
+        GET: "GET",
+        PUT: "PUT",
         DELETE: "DELETE"
     },
 
 
     add: function () {
-        var title = $("input[title='Title']").val();
-        var remindDate = $("input[title='Date']").val();
+        var title = $("input[title='title']").val();
+        var remindDate = $("input[title='remindDate']").val();
 
 //json data
         var data = {
@@ -32,13 +32,13 @@ window.Reminder = {
         };
 
         $.ajax({
-            url: API.CREATE,
-            method: ACTION_METHODS.CREATE,
+            url: API.POST,
+            method: ACTION_METHODS.POST,
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data)
         }).done(function (response) {
             console.log(response);
-            $('#reminders tbody').append(Reminder.getRow(response));
+            $('#reminders tbody').append(Reminder.getReminderRow(response));
 
         }).fail(function (jqXHR, textStatus, error) {
             alert(textStatus);
@@ -60,7 +60,8 @@ window.Reminder = {
         });
     },
 
-    getReminderRow: function (product) {
+
+    getReminderRow: function (reminder) {
         return `<tr><td hidden>" + reminder.id +
                 "</td><td>" + reminder.title +
                 "</td><td>" + reminder.remindDate +
@@ -70,12 +71,12 @@ window.Reminder = {
 `
     },
 
-    displayReminders: function (reminder) {
+    displayReminders: function (items) {
         console.log('Displaying reminders.');
 
         var rows = '';
 
-        reminder.forEach(product => rows += Reminder.getReminderRow(reminder));
+        items.forEach(item => rows += Reminder.getReminderRow(item));
 
         console.log(rows);
 
@@ -114,7 +115,7 @@ window.Reminder = {
 
     update: function(reminder) {
         $.ajax({
-            url: API.UPDATE + '?id' + id,
+            url: API.PUT + '?id' + id,
             method: ACTION_METHODS.UPDATE,
             data: reminder
         }).done(function (response) {
