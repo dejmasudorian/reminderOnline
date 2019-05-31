@@ -1,10 +1,10 @@
 <html>
 <head>
-    <title>Reminder</title>
+    <title>reminderProject</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600"/>
 <body>
 <div class="container">
 
@@ -26,7 +26,7 @@
 
     <div class="tab-content">
         <div class="tab-pane container active" id="add-reminder" role="tabpanel" aria-labelledby="add-reminder-tab">
-            <h3>Add an reminder</h3>
+            <h3>What do you want to remember later?</h3>
             <form id="create-reminder">
                 <div class="form-group">
                     <label for="inputTitle">Title</label>
@@ -35,9 +35,16 @@
                 </div>
                 <div class="form-group">
                     <label for="inputDate">Date</label>
-                    <input class="form-control" type="datetime-local" title="remindDate" name="remindDate" id="inputDate" aria-describedby="dateHelp">
+                    <input class="form-control" type="date" title="remindDate" name="remindDate" id="inputDate" aria-describedby="dateHelp">
                     <small id="dateHelp" class="form-text text-muted">Enter a date for your new event.</small>
                 </div>
+                <div class="form-group">
+                    <label for="inputDetails">Details</label>
+                    <input type="text" class="form-control" id="inputDetails" title="details" name= "details" aria-describedby="detailsHelp" placeholder="Enter some details for your reminder.">
+                    <small id="detailsHelp" class="form-text text-muted">Enter a few details about your reminder. You can find them later in the Notification area.</small>
+                </div>
+                <input type="checkbox" id="importance" value="true"><label for="importance"> Is this reminder important for you?</label>
+
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
         </div>
@@ -57,23 +64,22 @@
             </table>
         </div>
 
+
         <div class="tab-pane container active" id="view-notification" role="tabpanel" aria-labelledby="view-notification-tab">
             <table class="table" id="notifications">
                 <thead>
                 <tr>
                     <th scope="col">Details</th>
-                    <th scope="col">Reminder Created Date</th>
+                    <th scope="col">Date Created</th>
                     <th scope="col">Importance</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <td></td>
-                <td></td>
-                <td><input type="checkbox" title="Importance"></td>
                 </tbody>
             </table>
         </div>
+
 
         <div class="tab-pane container active" id="view-event" role="tabpanel" aria-labelledby="view-event-tab">
             <table class="table" id="events">
@@ -94,6 +100,19 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="js/reminders.js"></script>
 <script src="js/notifications.js"></script>
+<script>
+
+    $("input:checkbox:not(:checked)").each(function() {
+        var column = $(this).attr('importance');
+        $(column).show();
+    });
+
+    $("input:checkbox").click(function(){
+        var column = $(this).attr('importance');
+        $(column).toggle();
+    });
+
+</script>
 </head>
 </body>
 </html>

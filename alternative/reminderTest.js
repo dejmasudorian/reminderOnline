@@ -1,4 +1,4 @@
-window.Reminder = {
+window.reminderProject = {
 
     //declare var for update
     reminderList:[],
@@ -38,7 +38,7 @@ window.Reminder = {
             data: JSON.stringify(data)
         }).done(function (response) {
             console.log(response);
-            $('#reminders tbody').append(Reminder.getReminderRow(response));
+            $('#reminders tbody').append(reminderProject.getReminderRow(response));
 
         }).fail(function (jqXHR, textStatus, error) {
             alert(textStatus);
@@ -50,13 +50,13 @@ window.Reminder = {
 
     get: function () {
         $.ajax({
-            url: Reminder.apiUrl + "/reminders",
+            url: reminderProject.apiUrl + "/reminders",
             method: "GET"
         }).done(function (response) {
             console.log(response);
             // reload items table
 
-            Reminder.displayReminders(response.content);
+            reminderProject.displayReminders(response.content);
         });
     },
 
@@ -76,7 +76,7 @@ window.Reminder = {
 
         var rows = '';
 
-        items.forEach(item => rows += Reminder.getReminderRow(item));
+        items.forEach(item => rows += reminderProject.getReminderRow(item));
 
         console.log(rows);
 
@@ -86,7 +86,7 @@ window.Reminder = {
 
     startEdit: function (id) {
         // ES5 function systax inside find
-        var editReminder = Reminder.reminderList.find(function (reminder) {
+        var editReminder = reminderProject.reminderList.find(function (reminder) {
             console.log(reminder.title);
             return reminder.id == id;
         });
@@ -94,11 +94,11 @@ window.Reminder = {
 
         $('input[name=title]').val(editReminder.title);
         $('input[name=remindDate]').val(editReminder.remindDate);
-        Reminder.editId = id;
+        reminderProject.editId = id;
     },
 
     cancelEdit: function() {
-        Reminder.editId = '';
+        reminderProject.editId = '';
         document.querySelector(".create-reminder-form").reset();
     },
 
@@ -132,23 +132,23 @@ window.Reminder = {
 
             console.log('Submitting form');
 
-            Reminder.add();
+            reminderProject.add();
 
             return false;
         });
 
         $('#reminders tbody').delegate('.delete', 'click', function () {
             var id = $(this).data('id');
-            Reminder.delete(id);
+            reminderProject.delete(id);
         });
 
         $('#reminders tbody').delegate('.edit', 'click', function () {
             var id = $(this).data('id');
-            Reminder.startEdit(id);
+            reminderProject.startEdit(id);
         });
     }
 };
 
 
-Reminder.get();
-Reminder.bindEvents();
+reminderProject.get();
+reminderProject.bindEvents();

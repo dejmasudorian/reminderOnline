@@ -1,7 +1,10 @@
 apiUrl = "http://localhost:8082";
 
+reminderList=[];
+    editId='';
+
 $(document).ready(function() {
-    $('#tabs a').on('click', function (e) {
+    $('#view-reminder-tab').on('click', function (e) {
         $(this).tab('show')
         $("a.active").removeClass("active");
         $(this).addClass("active");
@@ -10,26 +13,48 @@ $(document).ready(function() {
 
     getReminders();
 
+
     $("#create-reminder").submit(function (event) {
         event.preventDefault();
 
-        add();
+        addReminder();
+        addNotifications();
     });
 
-        $('#reminders tbody').delegate('.delete', 'click', function () {
+    $('#reminders tbody').delegate('.delete', 'click', function () {
             var id = $(this).data('id');
             deleteReminder(id);
-        });
+    });
 
     $('#reminders tbody').delegate('.edit', 'click', function () {
         var id = $(this).data('id');
-        startEdit(id);
+        update(id);
     });
-
 
 
 
 });
+
+function addNotifications() {
+    var details = $("input[title='Details']").val();
+    var reminderCreatedDate = new Date();
+
+    var data = {
+        'details': details,
+        'reminderCreatedDate': reminderCreatedDate,
+    };
+
+    $.ajax({
+        url: apiUrl + "/notifications",
+        method:"POST",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data)
+    }).done(function (response) {
+        console.log(response);
+    });
+}
+
+
 
 function remainingTime(index) {
 
@@ -52,8 +77,7 @@ function remainingTime(index) {
 }
 
 
-
-function add() {
+function addReminder() {
     var title = $("input[title='title']").val();
     var remindDate = $("input[title='remindDate']").val();
 
@@ -75,6 +99,12 @@ function add() {
     });
 }
 
+function dateFormat(inputDate) {
+    var dateFormated = new Date(inputDate).toLocaleDateString('ro-RO');
+    return dateFormated;
+}
+
+
 function getReminders() {
     $.ajax({
         url: apiUrl + "/reminders",
@@ -83,51 +113,63 @@ function getReminders() {
         $.each(response, function(i, reminder) {
             $('#reminders > tbody:last-child').append("<tr><td hidden>" + reminder.id +
                 "</td><td>" + reminder.title +
-                "</td><td>" + reminder.remindDate +
+                "</td><td>" + dateFormat(reminder.remindDate) +
                 "</td><td>" + remainingTime(reminder.remindDate)+
-                "</td><td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a>" +
-                "<a href='#' class='fa fa-trash delete'></a></td></tr>");
+                "</td><td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a><a href='#' class='fa fa-trash delete'></a></td></tr>");
         });
     });
 }
-
+/*
 function startEdit(id) {
-    // ES5 function systax inside find
-    var editPhone = PhoneBook.phoneBookList.find(function (phone) {
-        console.log(phone.first_name);
-        return phone.id == id;
+    var editReminder = reminderList.find(function (reminder) {
+        console.log(reminder.title);
+        return reminder.id == id;
     });
-    console.debug('startEdit', editPhone);
+    console.debug('startEdit', editReminder);
 
-    var title = $("input[title='title']").val();
-    var remindDate = $("input[title='remindDate']").val();
-    PhoneBook.editId = id;
+    $('input[name=title]').val(editReminder.title);
+    $('input[name=remindDate]').val(editReminder.remindDate);
+    editId = id;
 }
-
+*/
 function deleteReminder(id) {
     $.ajax({
         url: apiUrl + "/reminders/" + id,
-        method: "DELETE"
+        method: "DELETE",
+        type: "DELETE"
     }).done(function (response) {
         console.log(response);
         $('#reminders tbody').find("tr#" + id).remove();
-
     });
 }
 
-/*
 
-function getRow(reminder) {
-    var dateCorrection = new Date(reminder.remindDate).toLocaleDateString('ro-RO');
 
-    return `<tr id="${reminder.id}">
-<td class="title">${reminder.title}</td>
-<td class="remindDate">${dateCorrection}</td>
-<td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a>
-<a href="#" class="fa fa-trash delete" data-id="${reminder.id}"></a></td>
-</tr>
-`
-}*/
+function update(id) {
+    var url = "http://localhost:8082/reminders";
+
+    var data = {};
+    $('input[name=title]').val(reminder.title);
+    $('input[name=remindDate]').val(reminder.remindDate);
+    var json = JSON.stringify(data);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT", url + '/' + id, true);
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.onload = function () {
+        var reminder = JSON.parse(xhr.responseText);
+        if (xhr.readyState == 4 && xhr.status == "200") {
+            console.table(reminder);
+        } else {
+            console.error(reminder);
+        }
+    }
+    xhr.send(json);
+}
+
+
+
+
 
 
 
