@@ -38,13 +38,6 @@
                     <input class="form-control" type="date" title="remindDate" name="remindDate" id="inputDate" aria-describedby="dateHelp">
                     <small id="dateHelp" class="form-text text-muted">Enter a date for your new event.</small>
                 </div>
-                <div class="form-group">
-                    <label for="inputDetails">Details</label>
-                    <input type="text" class="form-control" id="inputDetails" title="details" name= "details" aria-describedby="detailsHelp" placeholder="Enter some details for your reminder.">
-                    <small id="detailsHelp" class="form-text text-muted">Enter a few details about your reminder. You can find them later in the Notification area.</small>
-                </div>
-                <input type="checkbox" id="importance" value="true"><label for="importance"> Is this reminder important for you?</label>
-
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
         </div>
@@ -82,6 +75,16 @@
 
 
         <div class="tab-pane container active" id="view-event" role="tabpanel" aria-labelledby="view-event-tab">
+            <form id="create-events">
+                <div class="form-group">
+                    <label for="inputDescription">Description</label>
+                    <input type="text" class="form-control" id="inputDescription" title="description" name= "description" aria-describedby="descriptionHelp" placeholder="Enter description.">
+                    <small id="descriptionHelp" class="form-text text-muted">Enter a short description for your new event.</small>
+                </div>
+                Reminder ID: <input type="number" name="reminderId">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+            <p><b>Note:</b> type="number" is not supported in Internet Explorer 9 and earlier versions.</p>
             <table class="table" id="events">
                 <thead>
                 <tr>
@@ -100,6 +103,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="js/reminders.js"></script>
 <script src="js/notifications.js"></script>
+<script src="js/event.js"></script>
 <script>
 
     $("input:checkbox:not(:checked)").each(function() {

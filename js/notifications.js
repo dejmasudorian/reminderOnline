@@ -2,50 +2,42 @@ apiUrl = "http://localhost:8082";
 
 $(document).ready(function(){
     $('#view-notification-tab').on('click', function (e) {
-        $(this).tab('show')
+        $(this).tab('show');
         $("a.active").removeClass("active");
         $(this).addClass("active");
     });
 
 
     getNotifications();
-
-
-    $('#notifications tbody').delegate('.delete', 'click', function () {
-        var id = $(this).data('id');
-        deleteNotification(id);
+    $("#create-reminder").submit(function (event) {
+        event.preventDefault();
+        addNotifications();
     });
-
-    $('#notifications tbody').delegate('.edit', 'click', function () {
-        var id = $(this).data('id');
-        startEdit(id);
-    });
-
-
-
 
 
 });
 
-function addNotifications() {
-    var details = $("input[title='Details']").val();
-    var reminderCreatedDate = new Date();
 
+function addNotifications() {
+    var details = "You have created a new reminder.";
+    var reminderCreatedDate = new Date();
     var data = {
         'details': details,
         'reminderCreatedDate': reminderCreatedDate,
+
     };
 
     $.ajax({
         url: apiUrl + "/notifications",
-        method:"POST",
+        method: "POST",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data)
     }).done(function (response) {
         console.log(response);
+    }).fail(function (jqXHR, textStatus, error) {
+        alert(textStatus);
     });
 }
-
 
 
 function dateFormat(inputDate) {

@@ -5,20 +5,16 @@ reminderList=[];
 
 $(document).ready(function() {
     $('#view-reminder-tab').on('click', function (e) {
-        $(this).tab('show')
+        $(this).tab('show');
         $("a.active").removeClass("active");
         $(this).addClass("active");
     });
 
-
     getReminders();
-
 
     $("#create-reminder").submit(function (event) {
         event.preventDefault();
-
         addReminder();
-        addNotifications();
     });
 
     $('#reminders tbody').delegate('.delete', 'click', function () {
@@ -30,30 +26,7 @@ $(document).ready(function() {
         var id = $(this).data('id');
         update(id);
     });
-
-
-
 });
-
-function addNotifications() {
-    var details = $("input[title='Details']").val();
-    var reminderCreatedDate = new Date();
-
-    var data = {
-        'details': details,
-        'reminderCreatedDate': reminderCreatedDate,
-    };
-
-    $.ajax({
-        url: apiUrl + "/notifications",
-        method:"POST",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data)
-    }).done(function (response) {
-        console.log(response);
-    });
-}
-
 
 
 function remainingTime(index) {
@@ -111,11 +84,12 @@ function getReminders() {
         method: "GET"
     }).done(function (response) {
         $.each(response, function(i, reminder) {
-            $('#reminders > tbody:last-child').append("<tr><td hidden>" + reminder.id +
+            $('#reminders > tbody:last-child').append("<tr><td>" + reminder.id +
                 "</td><td>" + reminder.title +
                 "</td><td>" + dateFormat(reminder.remindDate) +
                 "</td><td>" + remainingTime(reminder.remindDate)+
-                "</td><td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a><a href='#' class='fa fa-trash delete'></a></td></tr>");
+                "</td><td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a><a href='#' class='fa fa-trash delete'></a></td></tr>"
+            );
         });
     });
 }
