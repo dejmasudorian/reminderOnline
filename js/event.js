@@ -9,21 +9,26 @@ $(document).ready(function(){
 
     getEvents();
 
-    $('#events').delegate('.add_to_cart_button', 'click', function () {
-        var id = $(this).data('reminder_id');
-        addEventToReminder(id);
+    $("#create-event").submit(function (event) {
+        event.preventDefault();
+        createEvent();
     });
 
 });
 
 
-function addEventToReminder(reminderId){
+function createEvent() {
+    var name = $("input[title='name']").val();
+    var location = $("input[title='location']").val();
+    var dateEvent = $("input[title='dateEvent']").val();
     var description = $("input[title='description']").val();
-    var reminderId = $("input[title='reminderId']").val();
 
     var data = {
+        'name': name,
+        'location': location,
+        'dateEvent': dateEvent,
         'description': description,
-        'reminderId': reminderId,
+
     };
 
     $.ajax({
@@ -33,7 +38,15 @@ function addEventToReminder(reminderId){
         data: JSON.stringify(data)
     }).done(function (response) {
         console.log(response);
+    }).fail(function (jqXHR, textStatus, error) {
+        alert(textStatus);
     });
+}
+
+
+function dateFormat(inputDate) {
+    var dateFormated = new Date(inputDate).toLocaleDateString('ro-RO');
+    return dateFormated;
 }
 
 
@@ -44,8 +57,12 @@ function getEvents() {
     }).done(function (response) {
         $.each(response, function(i, event) {
             $('#events > tbody:last-child').append("<tr><td hidden>" + event.id +
+                "</td><td>" + event.name +
+                "</td><td>" + event.location +
+                "</td><td>" + dateFormat(event.dateEvent) +
                 "</td><td>" + event.description +
-                "</td><td><button class='button' data-reminder_id='${reminder.id}'><span>Add event to reminder </span></button></td></tr>");
+                "</td><td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a><a href='#' class='fa fa-trash delete'></a></td></tr>"
+            );
         });
     });
 }

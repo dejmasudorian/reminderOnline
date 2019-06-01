@@ -84,7 +84,7 @@ function getReminders() {
         method: "GET"
     }).done(function (response) {
         $.each(response, function(i, reminder) {
-            $('#reminders > tbody:last-child').append("<tr><td>" + reminder.id +
+            $('#reminders > tbody:last-child').append("<tr><td hidden>" + reminder.id +
                 "</td><td>" + reminder.title +
                 "</td><td>" + dateFormat(reminder.remindDate) +
                 "</td><td>" + remainingTime(reminder.remindDate)+

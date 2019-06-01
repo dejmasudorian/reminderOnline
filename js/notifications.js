@@ -7,19 +7,45 @@ $(document).ready(function(){
         $(this).addClass("active");
     });
 
-
     getNotifications();
+
     $("#create-reminder").submit(function (event) {
         event.preventDefault();
-        addNotifications();
+        addNotificationsForReminders();
+    });
+
+    $("#create-event").submit(function (event) {
+        event.preventDefault();
+        addNotificationsForEvents();
     });
 
 
 });
 
 
-function addNotifications() {
+function addNotificationsForReminders() {
     var details = "You have created a new reminder.";
+    var reminderCreatedDate = new Date();
+    var data = {
+        'details': details,
+        'reminderCreatedDate': reminderCreatedDate,
+
+    };
+
+    $.ajax({
+        url: apiUrl + "/notifications",
+        method: "POST",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data)
+    }).done(function (response) {
+        console.log(response);
+    }).fail(function (jqXHR, textStatus, error) {
+        alert(textStatus);
+    });
+}
+
+function addNotificationsForEvents() {
+    var details = "You have created a new event.";
     var reminderCreatedDate = new Date();
     var data = {
         'details': details,
