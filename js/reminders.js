@@ -19,9 +19,7 @@ $(document).ready(function() {
 
     $('#reminders').delegate('.delete', 'click', function () {
         event.preventDefault();
-
         let id = $(this).data('id');
-
         deleteReminder(id);
     });
 
@@ -29,6 +27,9 @@ $(document).ready(function() {
         var id = $(this).data('id');
         update(id);
     });
+
+    //Tooltip
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 
@@ -88,15 +89,19 @@ function getReminders() {
     }).done(function (response) {
         $.each(response, function(i, reminder) {
             $('#reminders > tbody:last-child').append("<tr><td hidden>" + reminder.id +
-                "</td><td>" + reminder.title +
+                "</td><td><div><a href='#' data-toggle='tooltip' title='You can verify this reminder in the notification tab.'>" + reminder.title +
+                "</a>" +
                 "</td><td>" + dateFormat(reminder.remindDate) +
                 "</td><td>" + remainingTime(reminder.remindDate)+
                 "</td><td><a href='#' data-id='${reminder.id}' class='edit'>&#9998;</a>" +
-                "<a href=''#' class='fa fa-trash delete' data-id=${reminder.id}></td></tr>"
+                "<a href='#' class='fa fa-trash delete' data-id='${reminder.id}'></td></tr>"
             );
         });
     });
 }
+
+
+
 /*
 function startEdit(id) {
     var editReminder = reminderList.find(function (reminder) {
@@ -116,7 +121,6 @@ function deleteReminder(id) {
     $.ajax({
         url: apiUrl + "/reminders/" + id,
         method: "DELETE",
-        data: id,
         headers: {
             'Access-Control-Allow-Origin': '*'}
     }).done(function (response) {
