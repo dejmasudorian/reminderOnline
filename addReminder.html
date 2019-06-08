@@ -1,0 +1,46 @@
+<html>
+<head>
+
+    <title>reminderProject</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id = "alert_success_add" style="position: relative; z-index: 9999"></div>
+<div id = "alert_warning_add" style="position: relative; z-index: 9999"></div>
+<div id = "alert_error_add" style="position: relative; z-index: 9999"></div>
+<div class="container">
+
+    <div class="tab-content">
+        <div class="tab-pane container active" id="add-reminder" role="tabpanel" aria-labelledby="add-reminder-tab">
+            <h3>What do you want to remember later?</h3>
+            <form id="create-reminder">
+                <div class="form-group">
+                    <label for="inputTitle">Title</label>
+                    <input type="text" class="form-control" id="inputTitle" title="title" name= "title" aria-describedby="titleHelp" placeholder="Enter a clear, specific title name that you can later recognize (e.g.'Family Meeting', 'Job Interview' etc.)">
+                    <small id="titleHelp" class="form-text text-muted">Enter a title for your new reminder.</small>
+                </div>
+                <div class="form-group">
+                    <label for="inputDate">Date</label>
+                    <input class="form-control" type="date" title="remindDate" name="remindDate" id="inputDate" aria-describedby="dateHelp">
+                    <small id="dateHelp" class="form-text text-muted">Enter the date when you wish to be reminded.</small>
+                </div>
+                <div class="row">
+                <button type="submit" class="btn btn-primary">Save</button>&nbsp;&nbsp;
+                <a href="showReminders.html" class="btn btn-primary" role="button">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="js/utils.js"></script>
+<script src="js/addReminder.js"></script>
+</body>
+</html>

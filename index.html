@@ -22,15 +22,15 @@
             <a class="nav-link" id="view-reminder-tab" data-toggle="tab" href="#view-reminder" role="tab" aria-controls="view-reminder" aria-selected="false">View reminders</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="view-notification-tab" data-toggle="tab" href="#view-notification" role="tab" aria-controls="view-notification" aria-selected="false">View notifications</a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" id="add-event-tab" data-toggle="tab" href="#add-event" role="tab" aria-controls="add-event" aria-selected="false">Create events</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="view-event-tab" data-toggle="tab" href="#view-event" role="tab" aria-controls="view-event" aria-selected="false">View events</a>
         </li>
-
+        <li class="nav-item">
+            <a class="nav-link" class="notificationButton" id="view-notification-tab" data-toggle="tab" href="#view-notification" role="tab" aria-controls="view-notification" aria-selected="false">
+                <span>Notifications</span><span class="badge">New</span></a>
+        </li>
     </ul>
 
     <div class="tab-content">
@@ -39,13 +39,13 @@
             <form id="create-reminder">
                 <div class="form-group">
                     <label for="inputTitle">Title</label>
-                    <input type="text" class="form-control" id="inputTitle" title="title" name= "title" aria-describedby="titleHelp" placeholder="Insert title:">
+                    <input type="text" class="form-control" id="inputTitle" title="title" name= "title" aria-describedby="titleHelp" placeholder="Enter a clear, specific title name that you can later recognize (e.g.'Family Meeting', 'Job Interview' etc.)">
                     <small id="titleHelp" class="form-text text-muted">Enter a title for your new reminder.</small>
                 </div>
                 <div class="form-group">
                     <label for="inputDate">Date</label>
                     <input class="form-control" type="date" title="remindDate" name="remindDate" id="inputDate" aria-describedby="dateHelp">
-                    <small id="dateHelp" class="form-text text-muted">Enter a date for your new reminder.</small>
+                    <small id="dateHelp" class="form-text text-muted">Enter the date when you wish to be reminded.</small>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
@@ -88,23 +88,19 @@
             <form id="create-event">
                 <div class="form-group">
                     <label for="inputTitle">Title</label>
-                    <input type="text" class="form-control" id="inputName" title="name" name= "name" aria-describedby="titleHelp" placeholder="Insert name.">
-                    <small id="nameHelp" class="form-text text-muted">Enter a name for your new event.</small>
+                    <input type="text" class="form-control" id="inputName" title="name" name= "name" aria-describedby="titleHelp" placeholder="Add a short, clear name.">
                 </div>
                 <div class="form-group">
                     <label for="inputLocation">Location</label>
-                    <input type="text" class="form-control" id="inputLocation" title="location" name= "location" aria-describedby="locationHelp" placeholder="Insert location.">
-                    <small id="locationHelp" class="form-text text-muted">Enter a specific location where your new event will take place.</small>
+                    <input type="text" class="form-control" id="inputLocation" title="location" name= "location" aria-describedby="locationHelp" placeholder="Include a place or an address.">
                 </div>
                 <div class="form-group">
                     <label for="inputDateEvent">Date</label>
                     <input class="form-control" type="date" title="dateEvent" name="dateEvent" id="inputDateEvent" aria-describedby="dateEventHelp">
-                    <small id="dateEventHelp" class="form-text text-muted">Enter a date for your new event.</small>
                 </div>
                 <div class="form-group">
                     <label for="inputDescription">Description</label>
-                    <input type="text" class="form-control" id="inputDescription" title="description" name= "description" aria-describedby="descriptionHelp" placeholder="Insert description.">
-                    <small id="descriptionHelp" class="form-text text-muted">Enter a short description for your new event.</small>
+                    <input type="text" class="form-control" id="inputDescription" title="description" name= "description" aria-describedby="descriptionHelp" placeholder="Describe what is your event about.">
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
@@ -133,6 +129,7 @@
 <script src="js/notifications.js"></script>
 <script src="js/event.js"></script>
 <script>
+
 
     $("input:checkbox:not(:checked)").each(function() {
         var column = $(this).attr('importance');

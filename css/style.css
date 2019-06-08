@@ -77,46 +77,29 @@ p {
     margin-top: 0px;
 }
 
-.button {
-    border-radius: 4px;
-    background-color: #f4511e;
-    border: none;
-    color: #FFFFFF;
-    text-align: center;
-    font-size: 28px;
-    padding: 20px;
-    width: 200px;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 5px;
-}
-
-.button span {
-    cursor: pointer;
-    display: inline-block;
+.notificationButton {
+    background-color: #555;
+    color: white;
+    text-decoration: none;
+    padding: 15px 26px;
     position: relative;
-    transition: 0.5s;
+    display: inline-block;
+    border-radius: 2px;
 }
 
-.button span:after {
-    content: '\00bb';
+.notificationButton:hover {
+    background: red;
+}
+
+.notificationButton .badge {
     position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
+    top: -10px;
+    right: -10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
 }
-
-.button:hover span {
-    padding-right: 25px;
-}
-
-.button:hover span:after {
-    opacity: 1;
-    right: 0;
-}
-.button {transform: translate(20px, 40px);}
-
 
 p {
     size: 10px;
