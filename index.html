@@ -12,6 +12,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <body>
+
+<div id = "alert_success_add" style="position: relative; z-index: 9999"></div>
+<div id = "alert_warning_add" style="position: relative; z-index: 9999"></div>
+<div id = "alert_error_add" style="position: relative; z-index: 9999"></div>
 <div class="container">
 
     <ul class="nav nav-tabs" id="tabs" role="tablist">
@@ -29,7 +33,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" class="notificationButton" id="view-notification-tab" data-toggle="tab" href="#view-notification" role="tab" aria-controls="view-notification" aria-selected="false">
-                <span>Notifications</span><span class="badge">New</span></a>
+                <span>Notifications</span>&nbsp;&nbsp;<span class="badge" id="nrNotification"></span></a>
         </li>
     </ul>
 
@@ -87,7 +91,7 @@
             <h3>Create your own event.</h3>
             <form id="create-event">
                 <div class="form-group">
-                    <label for="inputTitle">Title</label>
+                    <label for="inputName">Name</label>
                     <input type="text" class="form-control" id="inputName" title="name" name= "name" aria-describedby="titleHelp" placeholder="Add a short, clear name.">
                 </div>
                 <div class="form-group">
@@ -125,9 +129,12 @@
 </div>
 
 
-<script src="js/reminders.js"></script>
+<script src="js/addReminder.js"></script>
+<script src="js/showReminders.js"></script>
+<script src="js/utils.js"></script>
 <script src="js/notifications.js"></script>
-<script src="js/event.js"></script>
+<script src="js/addEvent.js"></script>
+<script src="js/showEvents.js"></script>
 <script>
 
 

@@ -18,19 +18,24 @@
 <div class="container">
 
     <div class="tab-content">
-        <div class="tab-pane container active" id="add-reminder" role="tabpanel" aria-labelledby="add-reminder-tab">
-            <h3>What do you want to remember later?</h3>
-            <form id="update-reminder">
+        <div class="tab-pane container active" id="add-event" role="tabpanel" aria-labelledby="add-even-tab">
+            <form id="update-event">
                 <input id="inputId" hidden>
                 <div class="form-group">
-                    <label for="inputTitle">Title</label>
-                    <input type="text" class="form-control" id="inputTitle" title="title" name= "title" aria-describedby="titleHelp" placeholder="Enter a clear, specific title name that you can later recognize (e.g.'Family Meeting', 'Job Interview' etc.)">
-                    <small id="titleHelp" class="form-text text-muted">Enter a title for your new reminder.</small>
+                    <label for="inputName">Name</label>
+                    <input type="text" class="form-control" id="inputName" title="name" name= "name" aria-describedby="titleHelp" placeholder="Add a short, clear name.">
                 </div>
                 <div class="form-group">
-                    <label for="inputDate">Date</label>
-                    <input class="form-control" type="date" title="remindDate" name="remindDate" id="inputDate" aria-describedby="dateHelp">
-                    <small id="dateHelp" class="form-text text-muted">Enter the date when you wish to be reminded.</small>
+                    <label for="inputLocation">Location</label>
+                    <input type="text" class="form-control" id="inputLocation" title="location" name= "location" aria-describedby="locationHelp" placeholder="Include a place or an address.">
+                </div>
+                <div class="form-group">
+                    <label for="inputDateEvent">Date</label>
+                    <input class="form-control" type="date" title="dateEvent" name="dateEvent" id="inputDateEvent" aria-describedby="dateEventHelp">
+                </div>
+                <div class="form-group">
+                    <label for="inputDescription">Description</label>
+                    <input type="text" class="form-control" id="inputDescription" title="description" name= "description" aria-describedby="descriptionHelp" placeholder="Describe what is your event about.">
                 </div>
                 <div class="row">
                     <button type="submit" class="btn btn-primary">Update</button>&nbsp;&nbsp;
@@ -41,6 +46,6 @@
     </div>
 </div>
 <script src="js/utils.js"></script>
-<script src="js/updateReminder.js"></script>
+<script src="js/updateEvent.js"></script>
 </body>
 </html>

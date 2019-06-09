@@ -32,8 +32,7 @@ function getReminders() {
                 <td>${dateFormat(reminder.remindDate)}</td>
                 <td>${remainingTime(reminder.remindDate)}</td>
                 <td><a href='updateReminder.html?id=${reminder.id}' class='edit'>&#9998;</a>
-                <a href='#' class='fa fa-trash delete' data-id=${reminder.id}></td></tr>
-                <tr id="${reminder.id}" class="collapse"><td colspan="4"></td></tr>`
+                <a href='#' class='fa fa-trash delete' data-id=${reminder.id}></td></tr>`
             );
         });
     });

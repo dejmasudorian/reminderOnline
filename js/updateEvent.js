@@ -3,62 +3,68 @@ apiUrl = "http://localhost:8082";
 $(document).ready(function() {
 
     var queryParams=getQueryParams();
-    getReminder(queryParams["id"]);
+    getEvent(queryParams["id"]);
 
-    $("#update-reminder").submit(function (event) {
+    $("#update-event").submit(function (event) {
         event.preventDefault();
-        updateReminder();
-        addNotificationUpdateForReminders();
+        updateEvent();
+        addNotificationUpdateForEvents();
     });
 
 });
 
-function getReminder(id) {
+function getEvent(id) {
     $.ajax({
-        url: apiUrl + "/reminders/" + id,
+        url: apiUrl + "/events/" + id,
         method: "GET"
     }).done(function (response) {
 
         $("#inputId").val(response.id);
-        $("#inputTitle").val(response.title);
-        $("#inputDate").val(response.remindDate.split("T")[0]);
+        $("#inputName").val(response.name);
+        $("#inputDateEvent").val(response.dateEvent.split("T")[0]);
+        $("#inputLocation").val(response.location);
+        $("#inputDescription").val(response.description);
 
     });
 }
 
-function updateReminder() {
+function updateEvent() {
 
     var id = $("#inputId").val();
-    var title = $("#inputTitle").val();
-    var remindDate = $("#inputDate").val();
+    var name = $("#inputName").val();
+    var dateEvent = $("#inputDateEvent").val();
+    var location = $("#inputLocation").val();
+    var description = $("#inputDescription").val();
 
-    if(title == "" || remindDate == ""){
-        bootstrap_alert.warning("Title and/or date can't be empty!");
+    if(name == "" || dateEvent == ""){
+        bootstrap_alert.warning("Name and date can't be empty!");
         return
     }
 
-    var reminder = {
+    var event = {
         'id' : id,
-        'title': title,
-        'remindDate': remindDate
+        'title': name,
+        'location': location,
+        'dateEvent': dateEvent,
+        'description': description
     };
 
     $.ajax({
-        url: apiUrl + "/reminders/" + id,
+        url: apiUrl + "/events/" + id,
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(reminder),
+        data: JSON.stringify(event),
         method: "PUT",
         headers: {
             'Access-Control-Allow-Origin': '*'},
     }).done(function (response) {
-        bootstrap_alert.success("Reminder updated successfully!");
+        bootstrap_alert.success("Event updated successfully!");
     }).fail(function (jqXHR, textStatus, error) {
         bootstrap_alert.error(error);
     });
 }
 
-function addNotificationUpdateForReminders() {
-    var details = "You have updated your reminder.";
+function addNotificationUpdateForEvents() {
+    var details = "You have updated your event.";
     var reminderCreatedDate = new Date();
     var data = {
         'details': details,
